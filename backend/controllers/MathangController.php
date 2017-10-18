@@ -8,6 +8,7 @@ use backend\models\MathangSearch;
 use backend\models\Nhacungcap;
 use backend\models\Donvitinh;
 use backend\models\Loaihang;
+use backend\models\Hangxe;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -69,6 +70,7 @@ class MathangController extends Controller
         $model = new Mathang();
         $model->created_at = time();
         $model->updated_at = time();
+
         $model->manhanvien = Yii::$app->user->id;
 
         $loaihang = new Loaihang();
@@ -79,17 +81,28 @@ class MathangController extends Controller
         $ncc = new Nhacungcap();
         $allNCC = $ncc->get_AllNhacungcap();
 
+        $thuonghieu = new Hangxe();
+        $allthuonghieu = $thuonghieu->get_all_Hangxe();
+
         $dvt = new Donvitinh();
         $alldvt = $dvt->get_AllDonvitinh();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->mahang]);
+        if($post = Yii::$app->request->post()){
+            $post['Mathang']['giahang'] = str_replace(',', '', $post['Mathang']['giahang']);
+        }
+
+        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
+         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+            // $model->soluong = str_replace(',', '', $model->soluong);
+            if($model->save()) return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
                 'allNCC' => $allNCC,
                 'alldvt' => $alldvt,
                 'dataParentLH' => $dataParentLH,
+                'allthuonghieu' => $allthuonghieu,
             ]);
         }
     }
@@ -103,12 +116,40 @@ class MathangController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        $model->updated_at = time();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->mahang]);
+        $model->manhanvien = Yii::$app->user->id;
+
+        $loaihang = new Loaihang();
+
+        $dataParentLH = $loaihang->getLoaiHangParent();
+        if(empty($dataParentLH)) $dataParentLH = array();
+
+        $ncc = new Nhacungcap();
+        $allNCC = $ncc->get_AllNhacungcap();
+
+        $thuonghieu = new Hangxe();
+        $allthuonghieu = $thuonghieu->get_all_Hangxe();
+
+        $dvt = new Donvitinh();
+        $alldvt = $dvt->get_AllDonvitinh();
+
+        if($post = Yii::$app->request->post()){
+            $model->giahang = (int)str_replace(',', '', Yii::$app->request->post()['Mathang']['giahang']);
+        }
+
+        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+            if($model->save()) return $this->redirect(['view', 'id' => $model->mahang]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'allNCC' => $allNCC,
+                'alldvt' => $alldvt,
+                'dataParentLH' => $dataParentLH,
+                'allthuonghieu' => $allthuonghieu,
             ]);
         }
     }

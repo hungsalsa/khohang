@@ -39,6 +39,7 @@
                      <li><a href="<?= Yii::$app->homeUrl.'loaihang'; ?>">Loại hàng</a>
                      </li>
                      <li><a href="<?= Yii::$app->homeUrl.'nhacungcap'; ?>">Nhà cung cấp</a>
+                     <li><a href="<?= Yii::$app->homeUrl.'donvitinh'; ?>">Đơn vị tính</a>
                      </li>
                   </ul>
                </li>

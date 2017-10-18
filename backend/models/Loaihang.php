@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "loaihang".
@@ -32,7 +33,7 @@ class Loaihang extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'hangxeID', 'created_at', 'updated_at'], 'required'],
+            [['name', 'created_at', 'updated_at'], 'required'],
             [['parentID', 'hangxeID', 'status', 'created_at', 'updated_at'], 'integer'],
             [['name', 'anh'], 'string', 'max' => 255],
             [['name'], 'unique'],
@@ -59,7 +60,7 @@ class Loaihang extends \yii\db\ActiveRecord
     public $data;
     public function getLoaiHangParent($parent=0,$level = '')
     {
-        $result = Loaihang::find()->asArray()->where('parentID =:parent',['parent'=>$parent])->all();
+        $result = Loaihang::find()->asArray()->where('parentID =:parent',['parent'=>$parent])->orderBy('name')->all();
         $level .= " --| ";
         foreach ($result as $key => $value) {
             if ($parent==0) {
@@ -70,5 +71,10 @@ class Loaihang extends \yii\db\ActiveRecord
         }
 
         return $this->data;
+    }
+
+    public function get_LoaiHangByID($id_LH)
+    {
+        return ArrayHelper::map(Loaihang::find()->where('id_LH =:ID',['ID'=>$id_LH])->orderBy('name')->all(),'id_LH','name');
     }
 }

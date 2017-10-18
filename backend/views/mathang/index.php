@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use backend\models\Loaihang;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MathangSearch */
@@ -10,6 +11,7 @@ use yii\grid\GridView;
 $this->title = 'Mathangs';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="mathang-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -24,16 +26,33 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'mahang',
+            // 'mahang',
             'tenhang',
-            'macongty',
+            'id_thuonghieu',
+            // 'macongty',
             'maloaihang',
+            [
+                'label'=>'Loại hàng',
+                'attribute' => 'maloaihang',
+                'value' =>  function ($data) {
+                    $loaihang = new Loaihang();
+                     $rrr = $loaihang->get_LoaiHangByID($data->maloaihang);
+                    return ($rrr[$data->maloaihang]);
+                    },
+            ],
             'soluong',
             // 'mota',
             // 'giahang',
+            [
+                'label' => 'Giá hàng',
+                'attribute' => 'giahang',
+                'value' =>  function ($data) {
+                    return number_format($data->giahang, 1,',','.');
+                }
+            ],
             // 'donvitinh',
             // 'manhanvien',
-            // 'status',
+            'status',
             // 'created_at',
             // 'updated_at',
 

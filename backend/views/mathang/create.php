@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'allNCC' => $allNCC,
         'alldvt' => $alldvt,
         'dataParentLH' => $dataParentLH,
+        'allthuonghieu' => $allthuonghieu,
     ]) ?>
 
 </div>

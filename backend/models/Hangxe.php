@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * This is the model class for table "hangxe".
+ * This is the model class for table "hangxe". Thay bang bang thuonghieu
  *
  * @property integer $id
  * @property string $tenhang
@@ -59,7 +59,7 @@ class Hangxe extends \yii\db\ActiveRecord
     {
         $hangxe = Hangxe::find()
         ->where(['status' => '1'])
-        ->orderBy('id')
+        ->orderBy('tenhang')
         ->all();
         return ArrayHelper::map($hangxe,'id','tenhang');
     }

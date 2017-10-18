@@ -18,7 +18,7 @@ class MathangSearch extends Mathang
     public function rules()
     {
         return [
-            [['mahang', 'macongty', 'maloaihang', 'soluong', 'giahang', 'manhanvien', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['mahang', 'macongty', 'maloaihang','id_thuonghieu', 'soluong', 'giahang', 'manhanvien', 'status', 'created_at', 'updated_at'], 'integer'],
             [['tenhang', 'donvitinh','mota'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class MathangSearch extends Mathang
         // grid filtering conditions
         $query->andFilterWhere([
             'mahang' => $this->mahang,
+            'id_thuonghieu' => $this->id_thuonghieu,
             'macongty' => $this->macongty,
             'maloaihang' => $this->maloaihang,
             'soluong' => $this->soluong,

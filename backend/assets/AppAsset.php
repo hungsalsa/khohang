@@ -42,7 +42,8 @@ class AppAsset extends AssetBundle
         'vendors/DateJS/build/date.js',
         'vendors/moment/min/moment.min.js',
         'vendors/bootstrap-daterangepicker/daterangepicker.js',
-        'build/js/custom.min.js',
+        'build/js/custom.js',
+        'js/simple.money.format.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
