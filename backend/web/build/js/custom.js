@@ -5068,6 +5068,6 @@ if (typeof NProgress != 'undefined') {
 	
 
 $(document).ready(function() {
-	// alert('msg');
 	$('#mathang-giahang').simpleMoneyFormat();
+	$('.giahang').simpleMoneyFormat();
 });

@@ -4242,3 +4242,5 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 .dataTables_wrapper > .row{
   overflow:auto !important; /*prevent datatables overflowing its container*/
 }
+.btnaction{margin-right: 10px;font-size: 18px;}
+.btnaction:hover{color: #FF0000;}

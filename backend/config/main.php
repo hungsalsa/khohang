@@ -13,10 +13,12 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
+    // 'homeUrl' => '/backend/',
     'modules' => [],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            // 'baseUrl' => '/backend/',
         ],
         'user' => [
             'identityClass' => 'common\models\User',

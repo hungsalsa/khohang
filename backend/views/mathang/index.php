@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use backend\models\Loaihang;
+// use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MathangSearch */
@@ -55,8 +56,56 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
             // 'created_at',
             // 'updated_at',
+            // ['attribute' => 'status',
+            //  'label' =>'status',
+            //  'contentOptions' => ['style' => 'width:680px;  min-width:600px;'],
+            //   ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            // [
+            //     'class' => 'yii\grid\ActionColumn',
+            //     'header' => 'Hành động',
+            //     'headerOptions' => [
+            //          'style' => 'color:red'
+            //      ],
+            //     'contentOptions' =>['style' => 'width:10%;'],
+            // ],
+
+            [
+              'class' => 'yii\grid\ActionColumn',
+              'header' => 'Hành động',
+              'contentOptions' =>['style' => 'width:10%;'],
+              'headerOptions' => ['style' => 'width:8%;color:#337ab7'],
+              'template' => '{view}{update}{delete}',
+              'buttons' => [
+                'view' => function ($url, $model) {
+                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, ['class'=>'btnaction',
+                        'title' => Yii::t('app', 'Chi tiết sản phẩm'),
+                               
+                    ]);
+                },
+
+                'update' => function ($url, $model) {
+                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, ['class'=>'btnaction',
+                        'title' => Yii::t('app', 'Sửa sản phẩm'),
+                    ]);
+                },
+                // 'delete' => function ($url, $model) {
+                //     return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, ['class'=>'btnaction','title' => Yii::t('app', 'Xóa sản phẩm'),
+                //     ]);
+                // }
+
+                'delete' => function ($url, $model) {
+                    return Html::a('<i class="glyphicon glyphicon-trash"></i>', 
+                            ['delete', 'id' => $model->mahang], 
+                            ['data' => ['confirm' => 'Do you really want to delete this element?','method' => 'post'],'class'=>'btnaction',
+                        'title' => Yii::t('app', 'Xóa sản phẩm')]
+                        );
+                },
+                
+
+              ],
+
+            ],
         ],
     ]); ?>
 </div>

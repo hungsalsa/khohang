@@ -48,6 +48,7 @@
                   <ul class="nav child_menu">
                      <li><a href="<?= Yii::$app->homeUrl.'dondathang'; ?>">Đơn đặt hàng</a></li>
                      <li><a href="<?= Yii::$app->homeUrl.'chitietdathang'; ?>">Chi tiết đặt hàng</a></li>
+                     <li><a href="<?= Yii::$app->homeUrl.'nhaphang'; ?>">Nhập kho</a></li>
                      
                   </ul>
                </li>

@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "mathang".
@@ -68,5 +69,10 @@ class Mathang extends \yii\db\ActiveRecord
     public function check_mathang($tenhang)
     {
         return $count = Mahang::Model()->count("tenhang=:tenhang", array("tenhang" => $tenhang));
+    }
+
+    public function getAllMathang()
+    {
+        return ArrayHelper::map(Mathang::find()->where(['status'=>'1'])->all(),'mahang','tenhang');
     }
 }

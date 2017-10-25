@@ -17,7 +17,7 @@ class AppAsset extends AssetBundle
         'vendors/nprogress/nprogress.css',
         'vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css',
         'vendors/bootstrap-daterangepicker/daterangepicker.css',
-        'build/css/custom.min.css',
+        'build/css/custom.css',
     ];
     public $js = [
         'vendors/jquery/dist/jquery.min.js',

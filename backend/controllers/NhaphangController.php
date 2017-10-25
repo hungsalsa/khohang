@@ -3,20 +3,19 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Mathang;
-use backend\models\MathangSearch;
+use backend\models\Nhaphang;
+use backend\models\NhaphangSearch;
 use backend\models\Nhacungcap;
+use backend\models\Mathang;
 use backend\models\Donvitinh;
-use backend\models\Loaihang;
-use backend\models\Hangxe;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MathangController implements the CRUD actions for Mathang model.
+ * NhaphangController implements the CRUD actions for Nhaphang model.
  */
-class MathangController extends Controller
+class NhaphangController extends Controller
 {
     /**
      * @inheritdoc
@@ -34,12 +33,12 @@ class MathangController extends Controller
     }
 
     /**
-     * Lists all Mathang models.
+     * Lists all Nhaphang models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MathangSearch();
+        $searchModel = new NhaphangSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +48,7 @@ class MathangController extends Controller
     }
 
     /**
-     * Displays a single Mathang model.
+     * Displays a single Nhaphang model.
      * @param integer $id
      * @return mixed
      */
@@ -61,58 +60,47 @@ class MathangController extends Controller
     }
 
     /**
-     * Creates a new Mathang model.
+     * Creates a new Nhaphang model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Mathang();
+        $model = new Nhaphang();
         $model->created_at = time();
         $model->updated_at = time();
-
         $model->manhanvien = Yii::$app->user->id;
-
-        $loaihang = new Loaihang();
-
-        $dataParentLH = $loaihang->getLoaiHangParent();
-        if(empty($dataParentLH)) $dataParentLH = array();
 
         $ncc = new Nhacungcap();
         $allNCC = $ncc->get_AllNhacungcap();
 
-        $thuonghieu = new Hangxe();
-        $allthuonghieu = $thuonghieu->get_all_Hangxe();
+        $mathang = new Mathang();
+        $allMathang = $mathang->getAllMathang();
 
+        
         $dvt = new Donvitinh();
         $alldvt = $dvt->get_AllDonvitinh();
-
         if($post = Yii::$app->request->post()){
-            $post['Mathang']['giahang'] = str_replace(',', '', $post['Mathang']['giahang']);
-            if($post['Mathang']['soluong']==null){
-                $post['Mathang']['soluong'] = 0;
-            }
-            
+            $model->gianhap = str_replace(',', '', $post['Nhaphang']['gianhap']);
         }
 
-        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
-         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             
-            // $model->soluong = str_replace(',', '', $model->soluong);
+            $model->gianhap = str_replace(',', '', $model->gianhap);
             if($model->save()) return $this->redirect(['index']);
+
         } else {
             return $this->render('create', [
                 'model' => $model,
                 'allNCC' => $allNCC,
+                'allMathang' => $allMathang,
                 'alldvt' => $alldvt,
-                'dataParentLH' => $dataParentLH,
-                'allthuonghieu' => $allthuonghieu,
             ]);
         }
     }
 
     /**
-     * Updates an existing Mathang model.
+     * Updates an existing Nhaphang model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -120,49 +108,18 @@ class MathangController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        
-        $model->updated_at = time();
 
-        $model->manhanvien = Yii::$app->user->id;
-
-        $loaihang = new Loaihang();
-
-        $dataParentLH = $loaihang->getLoaiHangParent();
-        if(empty($dataParentLH)) $dataParentLH = array();
-
-        $ncc = new Nhacungcap();
-        $allNCC = $ncc->get_AllNhacungcap();
-
-        $thuonghieu = new Hangxe();
-        $allthuonghieu = $thuonghieu->get_all_Hangxe();
-
-        $dvt = new Donvitinh();
-        $alldvt = $dvt->get_AllDonvitinh();
-
-        if($post = Yii::$app->request->post()){
-            $model->giahang = (int)str_replace(',', '', Yii::$app->request->post()['Mathang']['giahang']);
-            if($post['Mathang']['soluong']==Null){
-                $model->soluong = (int)0; 
-            }
-        }
-
-        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            
-            if($model->save()) return $this->redirect(['view', 'id' => $model->mahang]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->mahdn]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'allNCC' => $allNCC,
-                'alldvt' => $alldvt,
-                'dataParentLH' => $dataParentLH,
-                'allthuonghieu' => $allthuonghieu,
             ]);
         }
     }
 
     /**
-     * Deletes an existing Mathang model.
+     * Deletes an existing Nhaphang model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -175,15 +132,15 @@ class MathangController extends Controller
     }
 
     /**
-     * Finds the Mathang model based on its primary key value.
+     * Finds the Nhaphang model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Mathang the loaded model
+     * @return Nhaphang the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Mathang::findOne($id)) !== null) {
+        if (($model = Nhaphang::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
