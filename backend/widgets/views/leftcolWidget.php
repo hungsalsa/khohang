@@ -1,13 +1,13 @@
-
+<?php use yii\helpers\Html; ?>
    <div class="left_col scroll-view">
-      <div class="navbar nav_title" style="border: 0;"> <a href="<?= Yii::$app->homeUrl ?>" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a> </div>
+      <div class="navbar nav_title" style="border: 0;"> <a href="<?= Yii::$app->homeUrl ?>" class="site_title"><i class="fa fa-paw"></i> <span>Quản lý kho hàng !</span></a> </div>
       <div class="clearfix"></div>
       <!-- menu profile quick info -->
       <div class="profile clearfix">
          <div class="profile_pic"> <img src="<?= Yii::$app->request->baseUrl; ?>/images/img.jpg" alt="..." class="img-circle profile_img"> </div>
          <div class="profile_info">
             <span>Welcome,</span>
-            <h2>John Doe</h2>
+            <h2><?= Yii::$app->user->identity->username; ?></h2>
          </div>
       </div>
       <!-- /menu profile quick info -->
@@ -173,6 +173,9 @@
          <a data-toggle="tooltip" data-placement="top" title="FullScreen"> <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> </a>
          <a data-toggle="tooltip" data-placement="top" title="Lock"> <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> </a>
          <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html"> <span class="glyphicon glyphicon-off" aria-hidden="true"></span> </a>
+
+        
+            
       </div>
       <!-- /menu footer buttons -->
    </div>

@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use yii\base\ErrorException;
 
 /**
  * Site controller
@@ -44,14 +45,28 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
+
+    public function actionError()
+{
+    $this->layout = 'error';
+    $exception = Yii::$app->errorHandler->exception;
+    // echo Yii::$app->request->baseUrl;
+    $serverName =  Yii::$app->getUrlManager()->createAbsoluteUrl();
+    // $serverName =  str_replace('backend/','',$serverName);
+
+    if ($exception !== null) {
+        return $this->render('error', ['exception' => $exception,'serverName'=>$serverName]);
     }
+}
+
+    // public function actions()
+    // {
+    //     return [
+    //         'error' => [
+    //             'class' => 'yii\web\ErrorAction',
+    //         ],
+    //     ];
+    // }
 
     /**
      * Displays homepage.
